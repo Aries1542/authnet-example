@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "authorizenet": "^1.0.10",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0"
+  }
+}

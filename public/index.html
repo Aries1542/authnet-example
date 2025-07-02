@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<head>
+
+</head>
+<body>
+	<form method="post" action="https://test.authorize.net/payment/payment" id="formAuthorizeNetTestPage" name="formAuthorizeNetTestPage" style="display: none;">
+		<input type="hidden" name="token" id="token" value="temp" />
+		Continue to Authorize.net to Payment Page
+		<button id="btnContinue">Continue to next page</button>
+	</form>
+    <script>
+        lineItems = [
+            {
+                "itemId": "item1",
+                "quantity": 2,
+            },
+            {
+                "itemId": "item2",
+                "quantity": 1
+            }
+        ];
+        fetch('/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ lineItems })
+        }).then(response => {
+            console.log('Response:', response);
+            if (response.ok) {
+                return response.json();
+            } else {
+                response.json().then(err => {
+                    throw new Error(`Network response was not ok: ${err.error}`);
+                });
+            }
+        }).then(data => {
+            console.log('Data received:', data);
+            document.getElementById('token').value = data.token;
+            document.getElementById('formAuthorizeNetTestPage').style.display = 'block';
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+        
+
+    </script>
+</body>
+</html>
