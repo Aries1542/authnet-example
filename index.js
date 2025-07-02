@@ -33,9 +33,14 @@ function getAnAcceptPaymentPage(lineItems, callback) {
 	merchantAuthentication.setName(API_LOGIN_ID);
 	merchantAuthentication.setTransactionKey(TRANSACTION_KEY);
 
+	const amount = 0;
+	for (let item of lineItems.getLineItem()) {
+		amount += item.getUnitPrice() * item.getQuantity();
+	}
+
 	var transactionRequest = new APIContracts.TransactionRequestType();
 	transactionRequest.setTransactionType(APIContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
-	transactionRequest.setAmount(45);
+	transactionRequest.setAmount(amount);
 	transactionRequest.setLineItems(lineItems);
 	transactionRequest.setShipTo(new APIContracts.NameAndAddressType({}))
 
